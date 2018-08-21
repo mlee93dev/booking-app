@@ -1,15 +1,27 @@
 <form>
-  <div name="location">
-    <div class="container">
-      <div class="item"></div>
-      <div class="item">
-        <label for="zip">Please enter your zip code.</label>
-        <input name="zip" type="text" class="form-control" required>
-      </div>
-      <div class="item">
-        <button class="btn btn-secondary">Back</button>
-        <button class="btn btn-primary">Next</button>
-      </div>
+  <div id="1" class="container">
+    <div class="item">
+      <h1>Step 1/10</h1>
+    </div>
+    <div class="item">
+      <label for="zip">Please enter your zip code.</label>
+      <input name="zip" type="text" class="form-control" autofocus="true" required>
+    </div>
+    <div class="item">
+      <button class="btn btn-secondary" (click)="onBack()">Back</button>
+      <button class="btn btn-primary" (click)="onNext()">Next</button>
+    </div>
+  </div>
+  <div id="2" class="container hidden">
+    <div class="item">
+      <h1>Step 1/10</h1>
+    </div>
+    <div class="item">
+      <label for="zip">Choose your services!</label>
+    </div>
+    <div class="item">
+      <button class="btn btn-secondary" (click)="onBack()">Back</button>
+      <button class="btn btn-primary" (click)="onNext()">Next</button>
     </div>
   </div>
 </form>

@@ -6,10 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  id = 1;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onBack(){
+    console.log('back');
+  }
+
+  onNext(){
+    document.getElementById(`${this.id}`).classList.add('faded');
+    this.id++;
+    document.getElementById(`${this.id}`).classList.remove('hidden');
   }
 
 }

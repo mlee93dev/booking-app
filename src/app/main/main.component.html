@@ -1,25 +1,66 @@
-<form>
+<form #f="ngForm">
   <div id="1" class="container">
-    <div class="item">
-      <h1>Step 1/10</h1>
+    <div class="form-container-item">
+      <div class="form-progress">
+        <div [ngClass]="{'circle':true, 'active':activeFormPage==1}">
+          <span class="label">1</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">2</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">3</span>  
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">4</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">5</span>
+        </div>
+      </div>
     </div>
-    <div class="item">
+    <div class="form-container-item">
       <label for="zip">Please enter your zip code.</label>
-      <input name="zip" type="text" class="form-control" autofocus="true" required>
+      <input ngModel #zip="ngModel" name="zip" class="form-control zip"
+       autofocus="true" pattern="^\d{5}$">
     </div>
-    <div class="item">
+    <div class="form-container-item">
       <button class="btn btn-secondary" (click)="onBack()">Back</button>
-      <button class="btn btn-primary" (click)="onNext()">Next</button>
+      <button class="btn btn-primary" (click)="onNext()" [disabled]="!f.valid">Next</button>
     </div>
   </div>
   <div id="2" class="container hidden">
-    <div class="item">
-      <h1>Step 1/10</h1>
+    <div class="form-container-item">
+      <div class="form-progress">
+        <div [ngClass]="{'circle':true, 'done':activeFormPage>1}">
+          <span class="label">✓</span>
+        </div>
+        <span [ngClass]="{'bar':true, 'done':activeFormPage>1}"></span>
+        <div [ngClass]="{'circle':true, 'active':activeFormPage==2}">
+          <span class="label">2</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">3</span>  
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">4</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">5</span>
+        </div>
+      </div>
     </div>
-    <div class="item">
+    <div class="form-container-item">
       <label for="zip">Choose your services!</label>
     </div>
-    <div class="item">
+    <div class="form-container-item">
       <button class="btn btn-secondary" (click)="onBack()">Back</button>
       <button class="btn btn-primary" (click)="onNext()">Next</button>
     </div>

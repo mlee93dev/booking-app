@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  id = 1;
+  activeFormPage = 1;
 
   constructor() { }
 
@@ -14,13 +14,18 @@ export class MainComponent implements OnInit {
   }
 
   onBack(){
-    console.log('back');
+    if (this.activeFormPage == 1) {
+      return;
+    } 
+    document.getElementById(`${this.activeFormPage}`).classList.add('hidden');
+    this.activeFormPage--;
+    document.getElementById(`${this.activeFormPage}`).classList.remove('faded');
   }
 
   onNext(){
-    document.getElementById(`${this.id}`).classList.add('faded');
-    this.id++;
-    document.getElementById(`${this.id}`).classList.remove('hidden');
+    document.getElementById(`${this.activeFormPage}`).classList.add('faded');
+    this.activeFormPage++;
+    document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
   }
 
 }

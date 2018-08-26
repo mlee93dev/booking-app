@@ -58,7 +58,23 @@
       </div>
     </div>
     <div class="form-container-item">
-      <label for="zip">Choose your services!</label>
+      <div class="services">
+        <div class="service-item" style="background-color:green;">
+          <a (click)="popUpServiceDetails(firstDetails)">
+            <h1>Full Cleaning</h1>
+          </a>
+        </div>
+        <div class="service-item" style="background-color:powderblue;">
+          <a (click)="popUpServiceDetails(secondDetails)">
+            <h1>3 Hour Cleaning</h1>
+          </a>
+        </div>
+        <div class="service-item" style="background-color:beige;">
+          <a>
+            <h1>1 Hour Cleaning</h1>
+          </a>
+        </div>
+      </div>
     </div>
     <div class="form-container-item">
       <button class="btn btn-secondary" (click)="onBack()">Back</button>

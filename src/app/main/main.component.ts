@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-main',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
   activeFormPage = 1;
+  firstDetails = 'Details';
+  secondDetails = 'dets';
+  thirdDetails = 'doods';
 
   constructor() { }
 
@@ -26,6 +30,10 @@ export class MainComponent implements OnInit {
     document.getElementById(`${this.activeFormPage}`).classList.add('faded');
     this.activeFormPage++;
     document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
+  }
+
+  popUpServiceDetails(details: string){
+    swal(details);
   }
 
 }

@@ -59,21 +59,43 @@
     </div>
     <div class="form-container-item">
       <div class="services">
-        <div class="service-item" style="background-color:green;">
-          <a (click)="popUpServiceDetails(firstDetails)">
+        <a (click)="selectCleaning(1)" class="active">
+          <div class="service-item" style="background-color:green;"
+          [ngClass]="{active: activeCleanDetails == 1}">
             <h1>Full Cleaning</h1>
-          </a>
-        </div>
-        <div class="service-item" style="background-color:powderblue;">
-          <a (click)="popUpServiceDetails(secondDetails)">
+            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <ul class="details active" id="fullCleanDetails">
+              <li>Everything</li>
+              <li>Thats right!!</li>
+              <li>Huhu</li>
+              <li>Heheheheh</li>
+            </ul>
+          </div>
+        </a>
+        <a (click)="selectCleaning(2)">
+          <div class="service-item inactive" style="background-color:powderblue;"
+          [ngClass]="{active: activeCleanDetails == 2}">
             <h1>3 Hour Cleaning</h1>
-          </a>
-        </div>
-        <div class="service-item" style="background-color:beige;">
-          <a>
+            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <ul class="details" id="threeCleanDetails">
+              <li>Everything</li>
+              <li>Thats right!!</li>
+              <li>Huhu</li>
+            </ul>
+          </div>
+        </a>
+        <a (click)="selectCleaning(3)">
+          <div class="service-item inactive" style="background-color:beige;"
+          [ngClass]="{active: activeCleanDetails == 3}">
             <h1>1 Hour Cleaning</h1>
-          </a>
-        </div>
+            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <ul class="details" id="oneCleanDetails">
+              <li>Everything</li>
+              <li>Thats right!!</li>
+              <li>Huhu</li>
+            </ul>
+          </div>
+        </a>
       </div>
     </div>
     <div class="form-container-item">

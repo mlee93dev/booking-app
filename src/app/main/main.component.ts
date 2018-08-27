@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import swal from 'sweetalert';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
   activeFormPage = 1;
-  firstDetails = 'Details';
-  secondDetails = 'dets';
-  thirdDetails = 'doods';
+  activeCleanDetails;
 
   constructor() { }
 
@@ -32,8 +29,12 @@ export class MainComponent implements OnInit {
     document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
   }
 
-  popUpServiceDetails(details: string){
-    swal(details);
+  toggleDetails(){
+    console.log('hi')
+  }
+
+  selectCleaning(detailNumber: number){
+    this.activeCleanDetails = detailNumber;
   }
 
 }

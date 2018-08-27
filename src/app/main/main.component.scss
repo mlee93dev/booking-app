@@ -1,0 +1,140 @@
+.container {
+  display: grid;
+  align-items: center;
+  grid-template-rows: 1fr 4fr 1fr;
+  background-color: white;
+  opacity: .9;
+  transition: transform .5s;
+  /* Center */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Mobile first sizing */
+  width: 95%;
+  max-width: 500px;
+  height: 70%;
+}
+
+/* Desktop sizing */
+@media (min-width: 600px) {
+  .container {
+    width: 75%;
+    max-width: 600px;
+  }
+}
+
+.form-container-item:nth-child(1), 
+.form-container-item:nth-child(2) {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-container-item:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container.faded {
+  transform: translate(-2000px, -50%);
+}
+
+.container.hidden{
+  transform: translate(2000px, -50%);
+}
+
+.circle, .bar {
+  display: inline-block;
+}
+
+.circle {
+  vertical-align: -4px;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background-color: gray;
+  border: 2px double white;
+  text-align: center;
+}
+
+.circle.active {
+  background-color: teal;
+}
+
+.circle.done {
+  background-color: green;
+  border: 2px double green;
+}
+
+.bar {
+  width: 50px;
+  height: 3px;
+  background-color: gray;
+}
+
+.bar.done {
+  background-color: green;
+}
+
+span.label {
+  color: white;
+  font: 12px arial;
+}
+
+input[type=number].zip::-webkit-outer-spin-button,
+input[type=number].zip::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.services {
+  display: grid;
+}
+
+.service-item {
+  display: block;
+  border-radius: 50px;
+  margin: 5px;
+  padding: 20px;
+  transition: transform .2s;
+  text-align: center;
+  max-height: 85px;
+
+  .details {
+    list-style-type: circle;
+    text-align: left;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .details.active {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 4s;
+  }
+}
+
+.service-item:hover{
+  transform: scale(1.05);
+}
+
+.service-item.selectedAndToggled:hover{
+  transform: none;
+}
+
+.service-item.selected {
+  border: 2px solid rgb(66, 10, 63);
+}
+
+.service-item.selectedAndToggled{
+  transition: max-height 2s;
+  max-height: 400px;
+}
+
+.service-item.inactive {
+  display: none;
+}
+
+.service-item > h1 {
+  font-size: 25px;
+}

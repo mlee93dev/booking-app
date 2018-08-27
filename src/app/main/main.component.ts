@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
   activeFormPage = 1;
+  selectedCleanOption;
   activeCleanDetails;
 
   constructor() { }
@@ -29,12 +30,15 @@ export class MainComponent implements OnInit {
     document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
   }
 
-  toggleDetails(){
-    console.log('hi')
+  selectCleaning(optionNum: number){
+    this.selectedCleanOption = optionNum;
   }
 
-  selectCleaning(detailNumber: number){
-    this.activeCleanDetails = detailNumber;
+  toggleCleanDetails(detailsNum: number) {
+    if (this.activeCleanDetails == detailsNum) {
+      return this.activeCleanDetails = null;
+    }
+    this.activeCleanDetails = detailsNum;
   }
 
 }

@@ -60,39 +60,51 @@
     <div class="form-container-item">
       <div class="services">
         <a (click)="selectCleaning(1)" class="active">
-          <div class="service-item" style="background-color:green;"
-          [ngClass]="{active: activeCleanDetails == 1}">
+          <div style="background-color:green;" [ngClass]="{'service-item': true,
+          selected: selectedCleanOption == 1, inactive: activeCleanDetails && activeCleanDetails !== 1,
+          selectedAndToggled: selectedCleanOption == 1 && activeCleanDetails == 1}">
             <h1>Full Cleaning</h1>
-            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-            <ul class="details active" id="fullCleanDetails">
-              <li>Everything</li>
-              <li>Thats right!!</li>
-              <li>Huhu</li>
-              <li>Heheheheh</li>
+            <a (click)="toggleCleanDetails(1)">
+            <i [ngClass]="{fa: true, 'fa-chevron-down': activeCleanDetails !== 1, 
+            'fa-chevron-up': activeCleanDetails == 1}" aria-hidden="true"></i></a>
+            <ul [ngClass]="{details: true, active: activeCleanDetails == 1}">
+              <li>All rooms</li>
+              <li>Carpet cleaning</li>
+              <li>Windows, walls included</li>
+              <li>All major appliances</li>
+              <li>Our most cost-efficient option at $70/hr</li>
             </ul>
           </div>
         </a>
         <a (click)="selectCleaning(2)">
-          <div class="service-item inactive" style="background-color:powderblue;"
-          [ngClass]="{active: activeCleanDetails == 2}">
+          <div style="background-color:powderblue;" [ngClass]="{'service-item': true, 
+          selected: selectedCleanOption == 2, inactive: activeCleanDetails && activeCleanDetails !== 2,
+          selectedAndToggled: selectedCleanOption == 2 && activeCleanDetails == 2}">
             <h1>3 Hour Cleaning</h1>
-            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-            <ul class="details" id="threeCleanDetails">
-              <li>Everything</li>
-              <li>Thats right!!</li>
-              <li>Huhu</li>
+            <a (click)="toggleCleanDetails(2)">
+            <i [ngClass]="{fa:true, 'fa-chevron-down': activeCleanDetails !== 2, 
+            'fa-chevron-up': activeCleanDetails == 2}" aria-hidden="true"></i></a>
+            <ul [ngClass]="{details: true, active: activeCleanDetails == 2}">
+              <li>Major rooms: bedroom, bathrooms, living room</li>
+              <li>Carpet cleaning</li>
+              <li>All major appliances</li>
+              <li>At an affordable price of $80/hr</li>
             </ul>
           </div>
         </a>
         <a (click)="selectCleaning(3)">
-          <div class="service-item inactive" style="background-color:beige;"
-          [ngClass]="{active: activeCleanDetails == 3}">
+          <div style="background-color:beige;" [ngClass]="{'service-item': true, 
+          selected: selectedCleanOption == 3, inactive: activeCleanDetails && activeCleanDetails !== 3,
+          selectedAndToggled: selectedCleanOption == 3 && activeCleanDetails == 3}">
             <h1>1 Hour Cleaning</h1>
-            <a (click)="toggleDetails()"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-            <ul class="details" id="oneCleanDetails">
-              <li>Everything</li>
-              <li>Thats right!!</li>
-              <li>Huhu</li>
+            <a (click)="toggleCleanDetails(3)">
+            <i [ngClass]="{fa: true, 'fa-chevron-down': activeCleanDetails !== 3, 
+            'fa-chevron-up': activeCleanDetails == 3}" aria-hidden="true"></i></a>
+            <ul [ngClass]="{details: true, active: activeCleanDetails == 3}">
+              <li>Simple room cleaning</li>
+              <li>Vaccuuming</li>
+              <li>Dishes</li>
+              <li>Our cheapest option! Only $100</li>
             </ul>
           </div>
         </a>

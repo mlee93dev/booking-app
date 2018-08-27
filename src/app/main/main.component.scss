@@ -53,13 +53,14 @@
 }
 
 .circle {
-  vertical-align: -4px;
+  vertical-align: -3px;
   height: 30px;
   width: 30px;
   border-radius: 30px;
   background-color: gray;
-  border: 2px double white;
+  border: 2px solid white;
   text-align: center;
+  margin: 1px;
 }
 
 .circle.active {
@@ -68,7 +69,8 @@
 
 .circle.done {
   background-color: green;
-  border: 2px double green;
+  border: 2px solid green;
+  margin: 0;
 }
 
 .bar {
@@ -195,26 +197,4 @@ input[type=number].zip::-webkit-inner-spin-button {
 .jzdcal .jzdb:before {
   opacity: 0.3; 
   content: 'o';
-}
-
-.circle {
-  border: 1px solid #f7f3eb; 
-  box-sizing: border-box!important; 
-  border-radius: 200px!important;
-}
-
-span[data-title]:hover:after, 
-div[data-title]:hover:after {
-  font: 11px 'Roboto'; 
-  font-weight: 400; 
-  content: attr(data-title); 
-  position: absolute; 
-  margin: 0 0 100px; 
-  background: #282423; 
-  border: 1px solid #f7f3eb; 
-  color: #f7f3eb; 
-  padding: 5px; 
-  z-index: 9999; 
-  min-width: 150px; 
-  max-width: 150px;
 }

@@ -8,16 +8,17 @@ import { TimeService } from './time.service';
 })
 export class MainComponent implements OnInit {
   activeFormPage = 1;
-  selectedCleanOption;
-  activeCleanDetails;
-  currentMonth;
-  currentYear;
+  selectedCleanOption: number;
+  activeCleanDetails: number;
+  currentMonth: string;
+  currentYear: number;
+  datesList: number[];
 
   constructor(public timeService: TimeService) { }
 
   ngOnInit() {
     this.setCalendar();
-    console.log(this.currentMonth);
+    console.log(this.datesList);
   }
 
   prevPage(){
@@ -57,6 +58,7 @@ export class MainComponent implements OnInit {
   setCalendar(){
     this.currentMonth = this.timeService.getCurrentMonthString();
     this.currentYear = this.timeService.getCurrentYear();
+    this.datesList = this.timeService.getDatesList();
   }
 
 }

@@ -29,8 +29,8 @@
        autofocus="true" pattern="^\d{5}$">
     </div>
     <div class="form-container-item">
-      <button class="btn btn-secondary" (click)="onBack()">Back</button>
-      <button class="btn btn-primary" (click)="onNext()" [disabled]="!f.valid">Next</button>
+      <button class="btn btn-secondary" (click)="prevPage()">Back</button>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="!f.valid">Next</button>
     </div>
   </div>
   <div id="2" class="container hidden">
@@ -111,8 +111,8 @@
       </div>
     </div>
     <div class="form-container-item">
-      <button class="btn btn-secondary" (click)="onBack()">Back</button>
-      <button class="btn btn-primary" (click)="onNext()">Next</button>
+      <button class="btn btn-secondary" (click)="prevPage()">Back</button>
+      <button class="btn btn-primary" (click)="nextPage()">Next</button>
     </div>
   </div>
   <div id="3" class="container hidden">
@@ -141,8 +141,13 @@
     </div>
     <div class="form-container-item">
       <div class="jzdbox1 jzdbasf jzdcal">
-      
-        <div class="jzdcalt">June 2017</div>
+        
+        <div class="cal-header">
+          <i class="fa fa-arrow-left cal-header-item" style="cursor: pointer;" (click)="prevMonth()"></i>
+          <div class="jzdcalt cal-header-item">{{currentMonth}} {{currentYear}}</div>
+          <i class="fa fa-arrow-right cal-header-item" style="cursor: pointer;" (click)="nextMonth()"></i>
+        </div>
+
       
         <span>Su</span>
         <span>Mo</span>
@@ -152,54 +157,55 @@
         <span>Fr</span>
         <span>Sa</span>
       
-      
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-        <span>6</span>
-        <span>7</span>
-        <span>8</span>
-        <span>9</span>
-        <span>10</span>
-        <span>11</span>
-        <span>12</span>
-        <span>13</span>
-        <span>14</span>
-        <span>15</span>
-        <span>16</span>
-        <span>17</span>
-        <span>18</span>
-        <span>19</span>
-        <span>20</span>
-        <span>21</span>
-        <span>22</span>
-        <span>23</span>
-        <span>24</span>
-        <span>25</span>
-        <span>26</span>
-        <span>27</span>
-        <span>28</span>
-        <span>29</span>
-        <span>30</span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
-        <span class="jzdb"></span>
+        <div class="days">
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+          <span>6</span>
+          <span>7</span>
+          <span>8</span>
+          <span>9</span>
+          <span>10</span>
+          <span>11</span>
+          <span>12</span>
+          <span>13</span>
+          <span>14</span>
+          <span>15</span>
+          <span>16</span>
+          <span>17</span>
+          <span>18</span>
+          <span>19</span>
+          <span>20</span>
+          <span>21</span>
+          <span>22</span>
+          <span>23</span>
+          <span>24</span>
+          <span>25</span>
+          <span>26</span>
+          <span>27</span>
+          <span>28</span>
+          <span>29</span>
+          <span>30</span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+          <span class="jzdb"></span>
+        </div>
       </div>
     </div>
     <div class="form-container-item">
-      <button class="btn btn-secondary" (click)="onBack()">Back</button>
-      <button class="btn btn-primary" (click)="onNext()">Next</button>
+      <button class="btn btn-secondary" (click)="prevPage()">Back</button>
+      <button class="btn btn-primary" (click)="nextPage()">Next</button>
     </div>
   </div>
 </form>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TimeService } from './time.service';
 
 @Component({
   selector: 'app-main',
@@ -9,13 +10,17 @@ export class MainComponent implements OnInit {
   activeFormPage = 1;
   selectedCleanOption;
   activeCleanDetails;
+  currentMonth;
+  currentYear;
 
-  constructor() { }
+  constructor(public timeService: TimeService) { }
 
   ngOnInit() {
+    this.setCalendar();
+    console.log(this.currentMonth);
   }
 
-  onBack(){
+  prevPage(){
     if (this.activeFormPage == 1) {
       return;
     } 
@@ -24,7 +29,7 @@ export class MainComponent implements OnInit {
     document.getElementById(`${this.activeFormPage}`).classList.remove('faded');
   }
 
-  onNext(){
+  nextPage(){
     document.getElementById(`${this.activeFormPage}`).classList.add('faded');
     this.activeFormPage++;
     document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
@@ -39,6 +44,19 @@ export class MainComponent implements OnInit {
       return this.activeCleanDetails = null;
     }
     this.activeCleanDetails = detailsNum;
+  }
+
+  prevMonth(){
+    console.log('prev');
+  }
+
+  nextMonth(){
+    console.log('next');
+  }
+
+  setCalendar(){
+    this.currentMonth = this.timeService.getCurrentMonthString();
+    this.currentYear = this.timeService.getCurrentYear();
   }
 
 }

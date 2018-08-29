@@ -170,19 +170,28 @@ input[type=number].zip::-webkit-inner-spin-button {
   background: linear-gradient(#749d9e, #b3a68b)!important;
 }
 
+.cal-header {
+  display: flex;
+  margin: 10px 0 0 0;
+  justify-content: space-between;
+}
+
+.cal-header-item{
+  display: flex;
+  align-items: center;
+}
+
 .jzdcalt {
   font: 18px 'Roboto'; 
   font-weight: 700; 
   color: #f7f3eb; 
-  display: block; 
-  margin: 18px 0 0 0; 
   text-transform: uppercase; 
   text-align: center; 
   letter-spacing: 1px;
 }
 
 .jzdcal span {
-  font:11px 'Roboto'; 
+  font: 11px 'Roboto'; 
   font-weight: 400; 
   color: #f7f3eb; 
   text-align: center; 
@@ -192,6 +201,12 @@ input[type=number].zip::-webkit-inner-spin-button {
   float: left; 
   overflow: hidden; 
   line-height: 40px;
+}
+
+.days > span:hover {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50px;
 }
 
 .jzdcal .jzdb:before {

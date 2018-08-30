@@ -21,9 +21,7 @@ export class TimeService {
   }
 
   getDatesList(date: Date){
-    console.log(date);
     let lastDay = this.getLastDayOfThisMonth(date);
-    console.log(lastDay)
     let datesList = [];
     for (let i = 1; i <= lastDay; i++) {
       datesList.push(i);
@@ -42,10 +40,20 @@ export class TimeService {
     return date;
   }
 
+  decrementGivenMonth(date: Date) {
+    date.setDate(1);
+    if (date.getMonth() == 0) {
+      date.setFullYear(date.getFullYear() - 1);
+      date.setMonth(11);
+    } else {
+      date.setMonth(date.getMonth() - 1);
+    }
+    return date;
+  }
+
   getLastDayOfThisMonth(date: Date){
     let dummyDate = new Date(date);
     this.incrementGivenMonth(dummyDate);
-    console.log('incremented:',dummyDate)
     dummyDate.setDate(0);
     return dummyDate.getDate();
   }

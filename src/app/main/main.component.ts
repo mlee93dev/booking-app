@@ -62,7 +62,8 @@ export class MainComponent implements OnInit {
     if (this.timeService.getCurrentMonthNumeric(this.defaultDate) == dummyDate.getMonth()) {
       return false;
     }
-    console.log('prev');
+    let prevMonthDate = this.timeService.decrementGivenMonth(this.defaultDate);
+    this.timeService.dateChanged.next(prevMonthDate);
   }
 
   nextMonth(){

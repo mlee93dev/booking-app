@@ -1,20 +1,29 @@
+import { Subject } from "rxjs";
+
 export class TimeService {
   private defaultDate = new Date;
   private monthStrings = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'];
+  public dateChanged = new Subject<Date>();
 
   constructor(){}
 
-  getCurrentMonthString(){
-    return this.monthStrings[this.defaultDate.getMonth()];
+  getCurrentMonthNumeric(date: Date){
+    return date.getMonth();
   }
 
-  getCurrentYear(){
-    return this.defaultDate.getFullYear();
+  getCurrentMonthString(date: Date){
+    return this.monthStrings[date.getMonth()];
   }
 
-  getDatesList(){
-    let lastDay = this.getLastDayOfThisMonth();
+  getCurrentYear(date: Date){
+    return date.getFullYear();
+  }
+
+  getDatesList(date: Date){
+    console.log(date);
+    let lastDay = this.getLastDayOfThisMonth(date);
+    console.log(lastDay)
     let datesList = [];
     for (let i = 1; i <= lastDay; i++) {
       datesList.push(i);
@@ -22,19 +31,29 @@ export class TimeService {
     return datesList;
   }
 
-  incrementMonth(date: Date) {
+  incrementGivenMonth(date: Date) {
+    date.setDate(1);
     if (date.getMonth() == 11) {
       date.setFullYear(date.getFullYear() + 1);
       date.setMonth(0);
     } else {
       date.setMonth(date.getMonth() + 1);
     }
+    return date;
   }
 
-  getLastDayOfThisMonth(){
-    let dummyDate = new Date;
-    this.incrementMonth(dummyDate);
+  getLastDayOfThisMonth(date: Date){
+    let dummyDate = new Date(date);
+    this.incrementGivenMonth(dummyDate);
+    console.log('incremented:',dummyDate)
     dummyDate.setDate(0);
     return dummyDate.getDate();
+  }
+
+  getInitialDay(date: Date){
+    let dummyDate = new Date(date);
+    dummyDate.setDate(1);
+    let day = dummyDate.getDay();
+    return day;
   }
 }

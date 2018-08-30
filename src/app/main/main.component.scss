@@ -197,19 +197,13 @@ input[type=number].zip::-webkit-inner-spin-button {
   text-align: center; 
   width: 42px; 
   height: 42px; 
-  display: inline-block; 
   float: left; 
   overflow: hidden; 
   line-height: 40px;
 }
 
-.days > span:hover {
+span.days:hover {
   cursor: pointer;
   border: 1px solid black;
   border-radius: 50px;
-}
-
-.jzdcal .jzdb:before {
-  opacity: 0.3; 
-  content: 'o';
 }

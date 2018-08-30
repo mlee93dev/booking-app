@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeService } from './time.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -10,15 +11,24 @@ export class MainComponent implements OnInit {
   activeFormPage = 1;
   selectedCleanOption: number;
   activeCleanDetails: number;
+  defaultDate = new Date;
   currentMonth: string;
   currentYear: number;
   datesList: number[];
+  initialDayOfWeek = [];
+  dateSubscription: Subscription;
 
   constructor(public timeService: TimeService) { }
 
   ngOnInit() {
     this.setCalendar();
-    console.log(this.datesList);
+    this.dateSubscription = this.timeService.dateChanged
+      .subscribe(
+        (newDate: Date) => {
+          this.defaultDate = newDate;
+          this.setCalendar();
+        }
+      )
   }
 
   prevPage(){
@@ -48,17 +58,31 @@ export class MainComponent implements OnInit {
   }
 
   prevMonth(){
+    let dummyDate = new Date;
+    if (this.timeService.getCurrentMonthNumeric(this.defaultDate) == dummyDate.getMonth()) {
+      return false;
+    }
     console.log('prev');
   }
 
   nextMonth(){
-    console.log('next');
+    let nextMonthDate = this.timeService.incrementGivenMonth(this.defaultDate);
+    this.timeService.dateChanged.next(nextMonthDate);
   }
 
   setCalendar(){
-    this.currentMonth = this.timeService.getCurrentMonthString();
-    this.currentYear = this.timeService.getCurrentYear();
-    this.datesList = this.timeService.getDatesList();
+    this.currentMonth = this.timeService.getCurrentMonthString(this.defaultDate);
+    this.currentYear = this.timeService.getCurrentYear(this.defaultDate);
+    this.datesList = this.timeService.getDatesList(this.defaultDate);
+    this.setBlankDays();
+  }
+
+  setBlankDays(){
+    let blankDays = [];
+    for (let i = 0; i <= this.timeService.getInitialDay(this.defaultDate) - 1; i++) {
+      blankDays.push('blankDay');
+    }
+    this.initialDayOfWeek = blankDays;
   }
 
 }

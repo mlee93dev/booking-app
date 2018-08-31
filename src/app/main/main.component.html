@@ -24,9 +24,25 @@
       </div>
     </div>
     <div class="form-container-item">
-      <label for="zip">Please enter your zip code.</label>
-      <input ngModel #zip="ngModel" name="zip" class="form-control zip"
-       autofocus="true" pattern="^\d{5}$">
+      <div class="customer-info">
+        <div class="first-name">
+          <label for="firstName">First name</label>
+          <input ngModel #firstName="ngModel" name="firstName" type="text" class="form-control" pattern="[a-zA-Z]+" autofocus="true">
+        </div>
+        <div class="last-name">
+            <label for="lastName">Last name</label>
+            <input ngModel #lastName="ngModel" name="lastName" type="text" class="form-control" pattern="[a-zA-Z]+">
+        </div>
+        <div class="phone">
+          <label for="phone">Phone number</label>
+          <input ngModel #phone="ngModel" name="phone" type="text" class="form-control noNumArrow"
+           pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$">
+        </div>
+        <div class="zipcode">
+          <label for="zip">Zip code</label>
+          <input ngModel #zip="ngModel" name="zip" class="form-control noNumArrow" pattern="^\d{5}$" maxlength="5">
+        </div>
+      </div>
     </div>
     <div class="form-container-item">
       <button class="btn btn-secondary" (click)="prevPage()">Back</button>
@@ -157,7 +173,13 @@
         <span>Sa</span>
     
         <span *ngFor="let blankDay of initialDayOfWeek"></span>
-        <span class="days" *ngFor="let date of datesList">{{date}}</span>
+        <div *ngIf="currentMonth == defaultMonth">
+          <span class="greyedOut" *ngFor="let date of daysBeforePresentDayList">{{date}}</span>
+          <span class="days" *ngFor="let date of nonGreyedOutDatesList">{{date}}</span>
+        </div>
+        <div *ngIf="currentMonth !== defaultMonth">
+          <span class="days" *ngFor="let date of datesList">{{date}}</span>
+        </div>
       </div>
     </div>
     <div class="form-container-item">

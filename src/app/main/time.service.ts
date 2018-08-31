@@ -64,4 +64,14 @@ export class TimeService {
     let day = dummyDate.getDay();
     return day;
   }
+
+  getDaysBeforePresentDay(){
+    const dummyDate = new Date();
+    let presentDay = dummyDate.getDate();
+    let daysBeforeTodayList = [];
+    for (let i = 1; i <= presentDay; i++) {
+      daysBeforeTodayList.push(i);
+    }
+    return daysBeforeTodayList;
+  }
 }

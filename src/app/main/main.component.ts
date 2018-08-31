@@ -12,9 +12,12 @@ export class MainComponent implements OnInit {
   selectedCleanOption: number;
   activeCleanDetails: number;
   defaultDate = new Date;
+  defaultMonth: string;
   currentMonth: string;
   currentYear: number;
   datesList: number[];
+  daysBeforePresentDayList: number[];
+  nonGreyedOutDatesList = [];
   initialDayOfWeek = [];
   dateSubscription: Subscription;
 
@@ -22,6 +25,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.setCalendar();
+    this.greyOutDaysBeforePresentDay();
     this.dateSubscription = this.timeService.dateChanged
       .subscribe(
         (newDate: Date) => {
@@ -84,6 +88,14 @@ export class MainComponent implements OnInit {
       blankDays.push('blankDay');
     }
     this.initialDayOfWeek = blankDays;
+  }
+
+  greyOutDaysBeforePresentDay(){
+    this.defaultMonth = this.timeService.getCurrentMonthString(this.defaultDate);
+    this.daysBeforePresentDayList = this.timeService.getDaysBeforePresentDay();
+    for (let i = this.daysBeforePresentDayList.length + 1; i <= this.datesList.length; i++) {
+      this.nonGreyedOutDatesList.push(i);
+    }
   }
 
 }

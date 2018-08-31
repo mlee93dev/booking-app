@@ -14,16 +14,8 @@
   transform: translate(-50%, -50%);
   /* Mobile first sizing */
   width: 95%;
-  max-width: 500px;
+  max-width: 450px;
   height: 70%;
-}
-
-/* Desktop sizing */
-@media (min-width: 600px) {
-  .container {
-    width: 75%;
-    max-width: 600px;
-  }
 }
 
 .form-container-item:nth-child(1), 
@@ -74,7 +66,7 @@
 }
 
 .bar {
-  width: 50px;
+  width: 45px;
   height: 3px;
   background-color: gray;
 }
@@ -88,9 +80,42 @@ span.label {
   font: 12px arial;
 }
 
-input[type=number].zip::-webkit-outer-spin-button,
-input[type=number].zip::-webkit-inner-spin-button {
+input[type=number].noNumArrow::-webkit-outer-spin-button,
+input[type=number].noNumArrow::-webkit-inner-spin-button {
     -webkit-appearance: none;
+}
+
+/* Customer Info */
+
+.customer-info {
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px;
+  grid-gap: 10px;
+  text-align: left;
+
+  .first-name {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .last-name {
+    grid-column-start: 3;
+    grid-column-end: 5;
+  }
+
+  .phone {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .zipcode {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
+
+.form-control.ng-invalid.ng-touched.ng-dirty{
+  border: 1px solid red;
 }
 
 /* Services */
@@ -193,7 +218,6 @@ input[type=number].zip::-webkit-inner-spin-button {
 .jzdcal span {
   font: 11px 'Roboto'; 
   font-weight: 400; 
-  color: #f7f3eb; 
   text-align: center; 
   width: 42px; 
   height: 42px; 
@@ -202,8 +226,16 @@ input[type=number].zip::-webkit-inner-spin-button {
   line-height: 40px;
 }
 
+span.days {
+  color: #f7f3eb; 
+}
+
 span.days:hover {
   cursor: pointer;
   border: 1px solid black;
   border-radius: 50px;
+}
+
+span.greyedOut {
+  color: grey;
 }

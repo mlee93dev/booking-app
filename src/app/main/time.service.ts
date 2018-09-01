@@ -7,19 +7,19 @@ export class TimeService {
 
   constructor(){}
 
-  getCurrentMonthNumeric(date: Date) {
+  public getCurrentMonthNumeric(date: Date) {
     return date.getMonth();
   }
 
-  getCurrentMonthString(date: Date) {
+  public getCurrentMonthString(date: Date) {
     return this.monthStrings[date.getMonth()];
   }
 
-  getCurrentYear(date: Date) {
+  public getCurrentYear(date: Date) {
     return date.getFullYear();
   }
 
-  getDatesList(date: Date) {
+  public getDatesList(date: Date) {
     let lastDay = this.getLastDayOfThisMonth(date);
     let datesList = [];
     for (let i = 1; i <= lastDay; i++) {
@@ -28,7 +28,7 @@ export class TimeService {
     return datesList;
   }
 
-  incrementGivenMonth(date: Date) {
+  public incrementGivenMonth(date: Date) {
     date.setDate(1);
     if (date.getMonth() == 11) {
       date.setFullYear(date.getFullYear() + 1);
@@ -39,7 +39,7 @@ export class TimeService {
     return date;
   }
 
-  decrementGivenMonth(date: Date) {
+  public decrementGivenMonth(date: Date) {
     date.setDate(1);
     if (date.getMonth() == 0) {
       date.setFullYear(date.getFullYear() - 1);
@@ -50,21 +50,21 @@ export class TimeService {
     return date;
   }
 
-  getLastDayOfThisMonth(date: Date) {
+  public getLastDayOfThisMonth(date: Date) {
     let dummyDate = new Date(date);
     this.incrementGivenMonth(dummyDate);
     dummyDate.setDate(0);
     return dummyDate.getDate();
   }
 
-  getInitialDay(date: Date) {
+  public getInitialDay(date: Date) {
     let dummyDate = new Date(date);
     dummyDate.setDate(1);
     let day = dummyDate.getDay();
     return day;
   }
 
-  getDaysBeforePresentDay() {
+  public getDaysBeforePresentDay() {
     const dummyDate = new Date();
     let presentDay = dummyDate.getDate();
     let daysBeforeTodayList = [];

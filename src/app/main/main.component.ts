@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
   dateSubscription: Subscription;
 
   constructor(public timeService: TimeService,
-              public socketService: SocketService) { }
+              private socketService: SocketService) { }
 
   ngOnInit() {
     this.initIoConnection();
@@ -62,6 +62,10 @@ export class MainComponent implements OnInit {
       .subscribe((location: Location) => {
         console.log(location);
       })
+  }
+
+  requestLocationDetails(){
+    console.log('location!')
   }
 
   selectCleaning(optionNum: number) {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeService } from './time.service';
 import { Subscription } from 'rxjs';
+import { SocketService } from './socket.service';
+import { Location } from './models/location.model';
 
 @Component({
   selector: 'app-main',
@@ -9,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   activeFormPage = 1;
+  ioConnection: any;
   selectedCleanOption: number;
   activeCleanDetails: number;
   defaultDate = new Date;
@@ -21,9 +24,11 @@ export class MainComponent implements OnInit {
   initialDayOfWeek = [];
   dateSubscription: Subscription;
 
-  constructor(public timeService: TimeService) { }
+  constructor(public timeService: TimeService,
+              public socketService: SocketService) { }
 
   ngOnInit() {
+    this.initIoConnection();
     this.setCalendar();
     this.greyOutDaysBeforePresentDay();
     this.dateSubscription = this.timeService.dateChanged
@@ -35,7 +40,7 @@ export class MainComponent implements OnInit {
       )
   }
 
-  prevPage(){
+  prevPage() {
     if (this.activeFormPage == 1) {
       return;
     } 
@@ -50,7 +55,16 @@ export class MainComponent implements OnInit {
     document.getElementById(`${this.activeFormPage}`).classList.remove('hidden');
   }
 
-  selectCleaning(optionNum: number){
+  initIoConnection() {
+    this.socketService.initializeSocket();
+
+    this.ioConnection = this.socketService.onLocationReceived()
+      .subscribe((location: Location) => {
+        console.log(location);
+      })
+  }
+
+  selectCleaning(optionNum: number) {
     this.selectedCleanOption = optionNum;
   }
 
@@ -61,7 +75,7 @@ export class MainComponent implements OnInit {
     this.activeCleanDetails = detailsNum;
   }
 
-  prevMonth(){
+  prevMonth() {
     let dummyDate = new Date;
     if (this.timeService.getCurrentMonthNumeric(this.defaultDate) == dummyDate.getMonth()) {
       return false;
@@ -70,19 +84,19 @@ export class MainComponent implements OnInit {
     this.timeService.dateChanged.next(prevMonthDate);
   }
 
-  nextMonth(){
+  nextMonth() {
     let nextMonthDate = this.timeService.incrementGivenMonth(this.defaultDate);
     this.timeService.dateChanged.next(nextMonthDate);
   }
 
-  setCalendar(){
+  setCalendar() {
     this.currentMonth = this.timeService.getCurrentMonthString(this.defaultDate);
     this.currentYear = this.timeService.getCurrentYear(this.defaultDate);
     this.datesList = this.timeService.getDatesList(this.defaultDate);
     this.initialDayOfWeek = this.timeService.setBlankDays(this.defaultDate);
   }
 
-  greyOutDaysBeforePresentDay(){
+  greyOutDaysBeforePresentDay() {
     this.defaultMonth = this.timeService.getCurrentMonthString(this.defaultDate);
     this.daysBeforePresentDayList = this.timeService.getDaysBeforePresentDay();
     for (let i = this.daysBeforePresentDayList.length + 1; i <= this.datesList.length; i++) {

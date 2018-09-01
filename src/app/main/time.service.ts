@@ -1,26 +1,25 @@
 import { Subject } from "rxjs";
 
 export class TimeService {
-  private defaultDate = new Date;
   private monthStrings = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'];
   public dateChanged = new Subject<Date>();
 
   constructor(){}
 
-  getCurrentMonthNumeric(date: Date){
+  getCurrentMonthNumeric(date: Date) {
     return date.getMonth();
   }
 
-  getCurrentMonthString(date: Date){
+  getCurrentMonthString(date: Date) {
     return this.monthStrings[date.getMonth()];
   }
 
-  getCurrentYear(date: Date){
+  getCurrentYear(date: Date) {
     return date.getFullYear();
   }
 
-  getDatesList(date: Date){
+  getDatesList(date: Date) {
     let lastDay = this.getLastDayOfThisMonth(date);
     let datesList = [];
     for (let i = 1; i <= lastDay; i++) {
@@ -51,21 +50,21 @@ export class TimeService {
     return date;
   }
 
-  getLastDayOfThisMonth(date: Date){
+  getLastDayOfThisMonth(date: Date) {
     let dummyDate = new Date(date);
     this.incrementGivenMonth(dummyDate);
     dummyDate.setDate(0);
     return dummyDate.getDate();
   }
 
-  getInitialDay(date: Date){
+  getInitialDay(date: Date) {
     let dummyDate = new Date(date);
     dummyDate.setDate(1);
     let day = dummyDate.getDay();
     return day;
   }
 
-  getDaysBeforePresentDay(){
+  getDaysBeforePresentDay() {
     const dummyDate = new Date();
     let presentDay = dummyDate.getDate();
     let daysBeforeTodayList = [];
@@ -73,5 +72,13 @@ export class TimeService {
       daysBeforeTodayList.push(i);
     }
     return daysBeforeTodayList;
+  }
+
+  setBlankDays(date: Date) {
+    let blankDays = [];
+    for (let i = 0; i <= this.getInitialDay(date) - 1; i++) {
+      blankDays.push('blankDay');
+    }
+    return blankDays;
   }
 }

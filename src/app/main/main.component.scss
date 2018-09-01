@@ -112,6 +112,13 @@ input[type=number].noNumArrow::-webkit-inner-spin-button {
     grid-column-start: 1;
     grid-column-end: 2;
   }
+
+  .location {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    align-self: center;
+    font-style: italic;
+  }
 }
 
 .form-control.ng-invalid.ng-touched.ng-dirty{
@@ -131,6 +138,8 @@ input[type=number].noNumArrow::-webkit-inner-spin-button {
   padding: 20px;
   transition: transform .2s;
   text-align: center;
+  font-family: marigold;
+  font-style: italic;
   max-height: 85px;
 
   .details {

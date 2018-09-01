@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { TimeService } from './main/time.service';
+import { SocketService } from './main/socket.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TimeService } from './main/time.service';
     FormsModule
   ],
   providers: [
-    TimeService
+    TimeService,
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

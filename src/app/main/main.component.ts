@@ -79,15 +79,7 @@ export class MainComponent implements OnInit {
     this.currentMonth = this.timeService.getCurrentMonthString(this.defaultDate);
     this.currentYear = this.timeService.getCurrentYear(this.defaultDate);
     this.datesList = this.timeService.getDatesList(this.defaultDate);
-    this.setBlankDays();
-  }
-
-  setBlankDays(){
-    let blankDays = [];
-    for (let i = 0; i <= this.timeService.getInitialDay(this.defaultDate) - 1; i++) {
-      blankDays.push('blankDay');
-    }
-    this.initialDayOfWeek = blankDays;
+    this.initialDayOfWeek = this.timeService.setBlankDays(this.defaultDate);
   }
 
   greyOutDaysBeforePresentDay(){

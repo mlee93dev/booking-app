@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeService } from './time.service';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
 
@@ -64,8 +64,10 @@ export class MainComponent implements OnInit {
       })
   }
 
-  requestLocationDetails(){
-    console.log('location!')
+  requestLocationDetails(zipcode: any){
+    if (!isNaN(parseInt(zipcode)) && zipcode.length == 5) {
+      this.socketService.requestLocationDetails(zipcode);
+    }
   }
 
   selectCleaning(optionNum: number) {

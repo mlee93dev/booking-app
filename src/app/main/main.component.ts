@@ -14,7 +14,6 @@ export class MainComponent implements OnInit, OnDestroy {
   ioConnection: any;
   city: string;
   state: string;
-  locationSubscription: Subscription;
   selectedCleanOption: number;
   activeCleanDetails: number;
   defaultDate = new Date;
@@ -32,12 +31,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initIoConnection();
-    this.locationSubscription = this.socketService.onLocationReceived()
-      .subscribe((locationDetails: Location) => {
-          this.city = locationDetails.city;
-          this.state = locationDetails.state;
-        }
-      );
     this.setCalendar();
     this.greyOutDaysBeforePresentDay();
     this.dateSubscription = this.timeService.dateChanged
@@ -50,9 +43,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.locationSubscription) {
-      this.locationSubscription.unsubscribe();
-    }
     if (this.dateSubscription) {
       this.dateSubscription.unsubscribe();
     }
@@ -77,9 +67,13 @@ export class MainComponent implements OnInit, OnDestroy {
     this.socketService.initializeSocket();
 
     this.ioConnection = this.socketService.onLocationReceived()
-      .subscribe((location: Location) => {
-        console.log(location);
-      })
+      .subscribe(
+        {next(locationData: Location) {
+          console.log(locationData.city, locationData.state)
+          this.city = locationData.city;
+          this.state = locationData.state;
+        }}
+      )
   }
 
   requestLocationDetails(zipcode: any){

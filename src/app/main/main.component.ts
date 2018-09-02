@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TimeService } from './time.service';
 import { Subscription, zip } from 'rxjs';
 import { SocketService } from './socket.service';
@@ -9,9 +9,12 @@ import { Location } from './models/location.model';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   activeFormPage = 1;
   ioConnection: any;
+  city: string;
+  state: string;
+  locationSubscription: Subscription;
   selectedCleanOption: number;
   activeCleanDetails: number;
   defaultDate = new Date;
@@ -29,6 +32,12 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.initIoConnection();
+    this.locationSubscription = this.socketService.onLocationReceived()
+      .subscribe((locationDetails: Location) => {
+          this.city = locationDetails.city;
+          this.state = locationDetails.state;
+        }
+      );
     this.setCalendar();
     this.greyOutDaysBeforePresentDay();
     this.dateSubscription = this.timeService.dateChanged
@@ -37,7 +46,16 @@ export class MainComponent implements OnInit {
           this.defaultDate = newDate;
           this.setCalendar();
         }
-      )
+      );
+  }
+
+  ngOnDestroy() {
+    if (this.locationSubscription) {
+      this.locationSubscription.unsubscribe();
+    }
+    if (this.dateSubscription) {
+      this.dateSubscription.unsubscribe();
+    }
   }
 
   prevPage() {

@@ -43,7 +43,7 @@
           <input ngModel #zip="ngModel" name="zip" class="form-control noNumArrow" pattern="^\d{5}$" maxlength="5"
            (keyup)="requestLocationDetails(f.value.zip)">
         </div>
-        <span class="location">Seattle, WA</span>
+        <span *ngIf="city && state" class="location">{{city}}, {{state}}</span>
       </div>
     </div>
     <div class="form-container-item">

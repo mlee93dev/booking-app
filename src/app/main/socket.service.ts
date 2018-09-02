@@ -19,7 +19,7 @@ export class SocketService {
   }
 
   public onLocationReceived(): Observable<Location> {
-    return new Observable<Location>(observer => {
+    return new Observable<Location>((observer) => {
       this.socket.on('sentLocationDetails', (location: Location) => observer.next(location));
     });
   }

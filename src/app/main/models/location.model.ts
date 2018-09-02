@@ -1,6 +1,6 @@
 export class Location{
-  private city: string;
-  private state: string;
+  public city: string;
+  public state: string;
 
   constructor(city, state){
     this.city = city;

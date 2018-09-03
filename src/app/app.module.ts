@@ -14,7 +14,7 @@ import { SocketService } from './main/socket.service';
     MainComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     FormsModule
   ],

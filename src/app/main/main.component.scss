@@ -248,3 +248,9 @@ span.days:hover {
 span.greyedOut {
   color: grey;
 }
+
+span.days.active {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50px;
+}

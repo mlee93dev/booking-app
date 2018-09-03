@@ -177,10 +177,10 @@
         <span *ngFor="let blankDay of initialDayOfWeek"></span>
         <div *ngIf="currentMonth == defaultMonth">
           <span class="greyedOut" *ngFor="let date of daysBeforePresentDayList">{{date}}</span>
-          <span class="days" *ngFor="let date of nonGreyedOutDatesList">{{date}}</span>
+          <span class="days" *ngFor="let date of nonGreyedOutDatesList" (click)=selectDay($event)>{{date}}</span>
         </div>
         <div *ngIf="currentMonth !== defaultMonth">
-          <span class="days" *ngFor="let date of datesList">{{date}}</span>
+          <span class="days" *ngFor="let date of datesList" (click)=selectDay($event)>{{date}}</span>
         </div>
       </div>
     </div>

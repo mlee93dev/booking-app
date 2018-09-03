@@ -26,12 +26,13 @@ export class MainComponent implements OnInit, OnDestroy {
   nonGreyedOutDatesList = [];
   initialDayOfWeek = [];
   dateSubscription: Subscription;
+  prevSelectedDay: any;
 
   constructor(public timeService: TimeService,
               private socketService: SocketService) { }
 
   ngOnInit() {
-    this.initIoConnection();
+    // this.initIoConnection();
     this.locationSubscription = this.socketService.dataReady
       .subscribe(
         (locationData: Location) => {
@@ -129,6 +130,17 @@ export class MainComponent implements OnInit, OnDestroy {
     this.daysBeforePresentDayList = this.timeService.getDaysBeforePresentDay();
     for (let i = this.daysBeforePresentDayList.length + 1; i <= this.datesList.length; i++) {
       this.nonGreyedOutDatesList.push(i);
+    }
+  }
+
+  selectDay(event){
+    if (this.prevSelectedDay) {
+      this.prevSelectedDay.classList.remove('active');
+      event.target.classList.add('active');
+      this.prevSelectedDay = event.target;
+    } else {
+      event.target.classList.add('active');
+      this.prevSelectedDay = event.target;
     }
   }
 

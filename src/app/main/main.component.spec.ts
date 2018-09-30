@@ -80,6 +80,6 @@ describe('MainComponent', () => {
     expect(comp.currentMonth).toBe('December');
     comp.nextMonth();
     expect(comp.currentMonth).toBe('January');
-  })
+  });
 
 })

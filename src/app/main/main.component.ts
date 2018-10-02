@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { TimeService } from './time.service';
 import { Subscription, zip } from 'rxjs';
 import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
+declare const gapi: any;
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   activeFormPage = 1;
   ioConnection: any;
   city: string;
@@ -28,12 +29,13 @@ export class MainComponent implements OnInit, OnDestroy {
   dateSubscription: Subscription;
   prevSelectedDay: HTMLElement;
   selectedDate: Date;
+  public auth2: any;
 
   constructor(public timeService: TimeService,
               private socketService: SocketService) { }
 
   ngOnInit() {
-    this.initIoConnection();
+    // this.initIoConnection();
     this.locationSubscription = this.socketService.dataReady
       .subscribe(
         (locationData: Location) => {
@@ -52,6 +54,10 @@ export class MainComponent implements OnInit, OnDestroy {
       );
   }
 
+  ngAfterViewInit() {
+    this.googleInit();
+  }
+
   ngOnDestroy() {
     if (this.locationSubscription) {
       this.locationSubscription.unsubscribe();
@@ -59,6 +65,7 @@ export class MainComponent implements OnInit, OnDestroy {
     if (this.dateSubscription) {
       this.dateSubscription.unsubscribe();
     }
+    this.signOut();
   }
 
   prevPage() {
@@ -141,6 +148,43 @@ export class MainComponent implements OnInit, OnDestroy {
     event.target.classList.add('active');
     this.selectedDate = new Date(`${this.currentMonth} ${event.target.innerText}, ${this.currentYear}`);
     this.prevSelectedDay = event.target;
+  }
+
+  googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '891773536607-gv6rrqqgd04bo8gls795np40kqjb4rea.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      this.attachSignin(document.getElementById('googleBtn'));
+    });
+  }
+
+  attachSignin(element) {
+    this.auth2.attachClickHandler(element, {},
+      (googleUser) => {
+
+        let profile = googleUser.getBasicProfile();
+        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        //YOUR CODE HERE
+
+
+      }, (error) => {
+        alert(JSON.stringify(error, undefined, 2));
+      });
+  }
+
+  signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      auth2.disconnect();
+      console.log('User signed out.');
+    });
   }
 
 }

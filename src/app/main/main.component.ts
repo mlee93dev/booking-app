@@ -29,7 +29,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   dateSubscription: Subscription;
   prevSelectedDay: HTMLElement;
   selectedDate: Date;
-  public auth2: any;
+  auth2: any;
 
   constructor(public timeService: TimeService,
               private socketService: SocketService) { }
@@ -65,7 +65,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.dateSubscription) {
       this.dateSubscription.unsubscribe();
     }
-    this.signOut();
+    this.googleSignOut();
   }
 
   prevPage() {
@@ -150,6 +150,8 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     this.prevSelectedDay = event.target;
   }
 
+  // Google sign in methods
+
   googleInit() {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
@@ -164,26 +166,21 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
-
-        let profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        console.log(this.auth2);
-        //YOUR CODE HERE
-
-
+        console.log('Signed in.');
+        // let profile = googleUser.getBasicProfile();
+        // console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        // console.log('ID: ' + profile.getId());
+        // console.log('Name: ' + profile.getName());
+        // console.log('Image URL: ' + profile.getImageUrl());
+        // console.log('Email: ' + profile.getEmail());
+        // console.log(this.auth2);
       });
   }
 
-  signOut() {
+  googleSignOut() {
     var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.', auth2);
-    });
-    auth2.disconnect().then(() => console.log('Disconnected.', auth2))
+    auth2.signOut().then(() => console.log('Signed out.'))
+    auth2.disconnect().then(() => console.log('Disconnected.'))
   }
 
 }

@@ -44,7 +44,7 @@
            (keyup)="requestLocationDetails(f.value.zip)">
         </div>
         <div class="g-signin2" id="googleBtn"></div>
-        <button class="btn btn-primary" (click)="signOut()">sign out</button>
+        <button class="btn btn-primary" (click)="googleSignOut()">sign out</button>
         <span *ngIf="city && state" class="location">{{city}}, {{state}}</span>
       </div>
     </div>

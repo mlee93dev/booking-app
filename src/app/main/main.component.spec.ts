@@ -2,6 +2,8 @@ import { MainComponent } from "./main.component";
 import { TimeService } from "./time.service";
 import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
+import { SocketIO, Server } from 'mock-socket';
+import { Observable } from "rxjs";
 
 describe('MainComponent', () => {
   let timeService = new TimeService();
@@ -82,4 +84,53 @@ describe('MainComponent', () => {
     expect(comp.currentMonth).toBe('January');
   });
 
-})
+});
+
+describe('Socket.IO', () => {
+  let timeService = new TimeService();
+  let socketService = new SocketService();
+  const comp = new MainComponent(timeService, socketService);
+  const SERVER_URL = window.location.host;
+  const mockServer = new Server(SERVER_URL);
+  let requestedLocation = { city: 'Seattle', state: 'WA' };
+
+  //Mock server socket emitter
+  mockServer.on('connection', socket => {
+    setTimeout(() => {
+      mockServer.emit('sentLocationDetails', requestedLocation);
+    }, 500);
+  });
+
+  beforeEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+  });
+
+  //Mock client socket receiver
+  it('-main component ioConnection should receive location from socket observable', async (done) => {
+    (window as any).io = SocketIO;
+    let socket = io(window.location.host);
+    let receivedLocation: Location;
+
+    function onLocationReceived(): Observable<Location> {
+      return new Observable<Location>((observer) => {
+        socket.on('sentLocationDetails', (locationData: Location) => observer.next(locationData));
+      });
+    }
+
+    comp.initIoConnection = function() {
+      this.ioConnection = onLocationReceived()
+        .subscribe(
+          {next(locationData: Location) {
+              receivedLocation = locationData;
+              expect(receivedLocation.city).toBe(requestedLocation.city);
+              expect(receivedLocation.state).toBe(requestedLocation.state);
+              mockServer.stop();
+              done();
+            }
+          }
+        );
+    }
+
+    comp.initIoConnection();
+  })
+});

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { TimeService } from './main/time.service';
 import { SocketService } from './main/socket.service';
+import { GoogleService } from './main/google.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SocketService } from './main/socket.service';
   ],
   providers: [
     TimeService,
-    SocketService
+    SocketService,
+    GoogleService
   ],
   bootstrap: [AppComponent]
 })

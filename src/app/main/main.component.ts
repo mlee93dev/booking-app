@@ -3,6 +3,7 @@ import { TimeService } from './time.service';
 import { Subscription, zip } from 'rxjs';
 import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
+import { GoogleService } from './google.service';
 declare const gapi: any;
 
 @Component({
@@ -32,7 +33,8 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   auth2: any;
 
   constructor(public timeService: TimeService,
-              private socketService: SocketService) { }
+              private socketService: SocketService,
+              public googleService: GoogleService) { }
 
   ngOnInit() {
     // this.initIoConnection();
@@ -151,16 +153,25 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Google sign in methods
-
   googleInit() {
     gapi.load('auth2', () => {
+      //callback: resolve the promise on api wrapper
       this.auth2 = gapi.auth2.init({
         client_id: '891773536607-gv6rrqqgd04bo8gls795np40kqjb4rea.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin',
         scope: 'profile email'
       });
+      //onerror: reject the promise on api wrapper
       this.attachSignin(document.getElementById('googleBtn'));
     });
+
+    this.googleService.LoadGoogleAPI().
+      then(() => {
+        console.log('success');
+      }).catch((e) => {
+        console.log('failure');
+      })
+
   }
 
   attachSignin(element) {

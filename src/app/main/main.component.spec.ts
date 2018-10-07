@@ -4,12 +4,13 @@ import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
 import { SocketIO, Server } from 'mock-socket';
 import { Observable } from "rxjs";
+import { GoogleService } from "./google.service";
+let timeService = new TimeService();
+let socketService = new SocketService();
+let googleService = new GoogleService();
+const comp = new MainComponent(timeService, socketService, googleService);
 
 describe('MainComponent', () => {
-  let timeService = new TimeService();
-  let socketService = new SocketService();
-  const comp = new MainComponent(timeService, socketService);
-
   it('-location subscription should change data', () => {
     comp.city = 'Boston';
     comp.state = 'MA';
@@ -87,9 +88,6 @@ describe('MainComponent', () => {
 });
 
 describe('Socket.IO', () => {
-  let timeService = new TimeService();
-  let socketService = new SocketService();
-  const comp = new MainComponent(timeService, socketService);
   const SERVER_URL = window.location.host;
   const mockServer = new Server(SERVER_URL);
   let requestedLocation = { city: 'Seattle', state: 'WA' };

@@ -151,14 +151,18 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     this.prevSelectedDay = event.target;
   }
 
-  googleInit() {
-    this.googleService.loadGoogleAPI()
-      .then((authInstance: any) => {
-        this.auth2 = authInstance;
-        this.googleService.attachSignin(document.getElementById('googleBtn'));
-      }).catch((e) => {
-        console.log(e);
-      });
+  googleInit(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.googleService.loadGoogleAPI()
+        .then((authInstance: any) => {
+          this.auth2 = authInstance;
+          this.googleService.attachSignin(document.getElementById('googleBtn'));
+          resolve(true);
+        }).catch((e) => {
+          console.log(e);
+          reject(false);
+        });
+    })
   }
 
   googleSignOut() {

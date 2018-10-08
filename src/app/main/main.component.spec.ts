@@ -9,6 +9,8 @@ let timeService = new TimeService();
 let socketService = new SocketService();
 let googleService = new GoogleService();
 const comp = new MainComponent(timeService, socketService, googleService);
+let dummyElement = document.createElement('div');
+document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
 
 describe('MainComponent', () => {
   it('-location subscription should change data', () => {
@@ -134,5 +136,26 @@ describe('Socket.IO', () => {
 });
 
 describe('Google API', () => {
+  let success = true;
+  let auth2 = 'dummyauth';
+  let errormsg = 'failure';
 
+  googleService.loadGoogleAPI = function(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) {
+        resolve(auth2);
+      }
+      else {
+        reject(errormsg);
+      }
+    });
+  }
+
+  googleService.attachSignin = function(element) {}
+
+  it('-On successful API call, googleInit() should initialize auth2', () => {
+    comp.googleInit()
+      .then((status) => expect(comp.auth2).toBe(auth2))
+  });
+  
 });

@@ -132,3 +132,7 @@ describe('Socket.IO', () => {
     comp.initIoConnection();
   })
 });
+
+describe('Google API', () => {
+
+});

@@ -4,7 +4,6 @@ import { Subscription, zip } from 'rxjs';
 import { SocketService } from './socket.service';
 import { Location } from './models/location.model';
 import { GoogleService } from './google.service';
-declare const gapi: any;
 
 @Component({
   selector: 'app-main',
@@ -154,44 +153,17 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Google sign in methods
   googleInit() {
-    gapi.load('auth2', () => {
-      //callback: resolve the promise on api wrapper
-      this.auth2 = gapi.auth2.init({
-        client_id: '891773536607-gv6rrqqgd04bo8gls795np40kqjb4rea.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        scope: 'profile email'
-      });
-      //onerror: reject the promise on api wrapper
-      this.attachSignin(document.getElementById('googleBtn'));
-    });
-
-    this.googleService.LoadGoogleAPI().
-      then(() => {
-        console.log('success');
+    this.googleService.loadGoogleAPI().
+      then((authInstance: any) => {
+        this.auth2 = authInstance;
+        this.googleService.attachSignin(document.getElementById('googleBtn'));
       }).catch((e) => {
-        console.log('failure');
+        console.log(e);
       })
-
-  }
-
-  attachSignin(element) {
-    this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-        console.log('Signed in.');
-        // let profile = googleUser.getBasicProfile();
-        // console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        // console.log('ID: ' + profile.getId());
-        // console.log('Name: ' + profile.getName());
-        // console.log('Image URL: ' + profile.getImageUrl());
-        // console.log('Email: ' + profile.getEmail());
-        // console.log(this.auth2);
-      });
   }
 
   googleSignOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => console.log('Signed out.'))
-    auth2.disconnect().then(() => console.log('Disconnected.'))
+    this.googleService.signOut();
   }
 
 }

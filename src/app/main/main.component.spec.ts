@@ -5,12 +5,11 @@ import { Location } from './models/location.model';
 import { SocketIO, Server } from 'mock-socket';
 import { Observable } from "rxjs";
 import { GoogleService } from "./google.service";
+
 let timeService = new TimeService();
 let socketService = new SocketService();
 let googleService = new GoogleService();
 const comp = new MainComponent(timeService, socketService, googleService);
-let dummyElement = document.createElement('div');
-document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
 
 describe('MainComponent', () => {
   it('-location subscription should change data', () => {
@@ -139,6 +138,9 @@ describe('Google API', () => {
   let success = true;
   let auth2 = 'dummyauth';
   let errormsg = 'failure';
+  let dummyElement = document.createElement('div');
+  document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
+  console.log = jasmine.createSpy('Console Log').and.callFake(() => {});
 
   googleService.loadGoogleAPI = function(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -155,7 +157,13 @@ describe('Google API', () => {
 
   it('-On successful API call, googleInit() should initialize auth2', () => {
     comp.googleInit()
-      .then((status) => expect(comp.auth2).toBe(auth2))
+      .then(() => expect(comp.auth2).toBe(auth2));
   });
+
+  it('-On failed API call, googleInit() should catch and log error', () => {
+    success = false;
+    comp.googleInit()
+      .catch((e) => expect(e).toBe(errormsg));
+  })
   
 });

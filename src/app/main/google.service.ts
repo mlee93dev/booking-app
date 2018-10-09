@@ -19,7 +19,7 @@ export class GoogleService {
         },
         timeout: 5000,
         ontimeout: () => {
-          reject('gapi.client timed out!')
+          reject('gapi.client timed out!');
         }
       });
     })
@@ -36,7 +36,8 @@ export class GoogleService {
           // console.log('Image URL: ' + profile.getImageUrl());
           // console.log('Email: ' + profile.getEmail());
           // console.log(this.auth2);
-          resolve('Signed in.')
+          console.log('Signed in.');
+          resolve('Attached.');
         },
         (error) => {
           reject(error);
@@ -44,9 +45,14 @@ export class GoogleService {
     });
   }
 
-  public signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => console.log('Signed out.'));
-    auth2.disconnect().then(() => console.log('Disconnected.'));
+  public signOut(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let auth2 = gapi.auth2.getAuthInstance();
+      let signOut = auth2.signOut();
+      let disconnect = auth2.disconnect();
+      Promise.all([signOut, disconnect])
+        .then(() => resolve('Signed out.'))
+        .catch((e) => reject(e));
+    })
   }
 }

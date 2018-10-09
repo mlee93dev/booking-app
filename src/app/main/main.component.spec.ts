@@ -137,7 +137,6 @@ describe('Socket.IO', () => {
 describe('Google API', () => {
   let success = true;
   let auth2 = 'dummyauth';
-  let googleUser = 'fakeUser';
   let errormsg = 'failure';
   let dummyElement = document.createElement('div');
   document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
@@ -153,8 +152,17 @@ describe('Google API', () => {
 
   googleService.attachSignin = function(element): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (success) resolve(googleUser);
+      if (success) resolve('Attached.');
       else reject(errormsg);
+    })
+  }
+
+  googleService.signOut = function(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) {
+        auth2 = null;
+        resolve();
+      } else reject(errormsg);
     })
   }
 
@@ -167,13 +175,23 @@ describe('Google API', () => {
       .catch((e) => expect(e).toBe(errormsg));
   });
 
-  it('-googleSignIn() should catch appropriate response', () => {
+  it('-googleAttachSignIn() should catch appropriate response', () => {
     success = true;
-    comp.googleSignIn(dummyElement)
-      .then((user) => expect(user).toBe(googleUser));
+    comp.googleAttachSignIn(dummyElement)
+      .then((status) => expect(status).toBe('Attached.'));
     
     success = false;
-    comp.googleSignIn(dummyElement)
+    comp.googleAttachSignIn(dummyElement)
       .catch((error) => expect(error).toBe(errormsg));
-  })
+  });
+
+  it('-googleSignOut() should clear auth instance', () => {
+    success = true;
+    comp.googleSignOut()
+      .then(() => expect(auth2).toBe(null));
+    
+    success = false;
+    comp.googleSignOut()
+      .catch((e) => expect(e).toBe(errormsg));
+  });
 });

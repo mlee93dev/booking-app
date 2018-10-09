@@ -156,9 +156,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       this.googleService.loadGoogleAPI()
         .then((authInstance: any) => {
           this.auth2 = authInstance;
-          this.googleSignIn(document.getElementById('googleBtn'))
+          this.googleAttachSignIn(document.getElementById('googleBtn'))
             .then((status) => console.log(status))
-            .catch((error) => console.log(error));
+            .catch((e) => console.log(e));
           resolve();
         }).catch((e) => {
           console.log(e);
@@ -167,7 +167,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  googleSignIn(element): Promise<any>{
+  googleAttachSignIn(element): Promise<any>{
     return new Promise((resolve, reject) => {
       this.googleService.attachSignin(element)
         .then((status) => {
@@ -178,8 +178,16 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  googleSignOut() {
-    this.googleService.signOut();
+  googleSignOut(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.googleService.signOut()
+        .then((status) => {
+          console.log(status);
+          resolve();
+        }).catch((e) => {
+          reject(e);
+        })
+    })
   }
 
 }

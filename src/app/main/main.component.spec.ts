@@ -158,7 +158,7 @@ describe('Google API', () => {
     })
   }
 
-  it('-googleInit() make call to gapi and get appropriate response', () => {
+  it('-googleInit() should make call to gapi and get appropriate response', () => {
     comp.googleInit()
       .then(() => expect(comp.auth2).toBe(auth2));
 
@@ -167,5 +167,13 @@ describe('Google API', () => {
       .catch((e) => expect(e).toBe(errormsg));
   });
 
-  // it('-')
+  it('-googleSignIn() should catch appropriate response', () => {
+    success = true;
+    comp.googleSignIn(dummyElement)
+      .then((user) => expect(user).toBe(googleUser));
+    
+    success = false;
+    comp.googleSignIn(dummyElement)
+      .catch((error) => expect(error).toBe(errormsg));
+  })
 });

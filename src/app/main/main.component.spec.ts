@@ -105,7 +105,7 @@ describe('Socket.IO', () => {
   });
 
   //Mock client socket receiver
-  it('-main component ioConnection should receive location from socket observable', async (done) => {
+  it('-ioConnection should receive location from socket observable', async (done) => {
     (window as any).io = SocketIO;
     let socket = io(window.location.host);
     let receivedLocation: Location;
@@ -131,39 +131,41 @@ describe('Socket.IO', () => {
     }
 
     comp.initIoConnection();
-  })
+  });
 });
 
 describe('Google API', () => {
   let success = true;
   let auth2 = 'dummyauth';
+  let googleUser = 'fakeUser';
   let errormsg = 'failure';
   let dummyElement = document.createElement('div');
   document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
   console.log = jasmine.createSpy('Console Log').and.callFake(() => {});
 
+  //Mock google api
   googleService.loadGoogleAPI = function(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (success) {
-        resolve(auth2);
-      }
-      else {
-        reject(errormsg);
-      }
+      if (success) resolve(auth2);
+      else reject(errormsg);
     });
   }
 
-  googleService.attachSignin = function(element) {}
+  googleService.attachSignin = function(element): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) resolve(googleUser);
+      else reject(errormsg);
+    })
+  }
 
-  it('-On successful API call, googleInit() should initialize auth2', () => {
+  it('-googleInit() make call to gapi and get appropriate response', () => {
     comp.googleInit()
       .then(() => expect(comp.auth2).toBe(auth2));
-  });
 
-  it('-On failed API call, googleInit() should catch and log error', () => {
     success = false;
     comp.googleInit()
       .catch((e) => expect(e).toBe(errormsg));
-  })
-  
+  });
+
+  // it('-')
 });

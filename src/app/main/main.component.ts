@@ -156,7 +156,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       this.googleService.loadGoogleAPI()
         .then((authInstance: any) => {
           this.auth2 = authInstance;
-          this.googleService.attachSignin(document.getElementById('googleBtn'));
+          this.googleService.attachSignin(document.getElementById('googleBtn'))
+            .then((status) => console.log(status))
+            .catch((error) => console.log(error));
           resolve();
         }).catch((e) => {
           console.log(e);

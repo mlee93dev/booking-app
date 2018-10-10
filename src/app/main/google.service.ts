@@ -3,7 +3,7 @@ declare const gapi: any;
 export class GoogleService {
   private auth2: any;
 
-  public loadGoogleAPI(): Promise<any> {
+  public loadGoogleAPIAuth2(): Promise<any> {
     return new Promise((resolve, reject) => {
       gapi.load('auth2', {
         callback: () => {
@@ -37,6 +37,7 @@ export class GoogleService {
           // console.log('Email: ' + profile.getEmail());
           // console.log(this.auth2);
           console.log('Signed in.');
+          //Should resolve with relevant information later
           resolve('Attached.');
         },
         (error) => {

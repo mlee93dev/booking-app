@@ -143,7 +143,7 @@ describe('Google API', () => {
   console.log = jasmine.createSpy('Console Log').and.callFake(() => {});
 
   //Mock google api
-  googleService.loadGoogleAPI = function(): Promise<any> {
+  googleService.loadGoogleAPIAuth2 = function(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (success) resolve(auth2);
       else reject(errormsg);

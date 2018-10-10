@@ -45,6 +45,7 @@
         </div>
         <div class="g-signin2" id="googleBtn"></div>
         <button class="btn btn-primary" (click)="googleSignOut()">sign out</button>
+        <button class="btn btn-primary" (click)="saveToGoogleCalendar()">Insert</button>
         <span *ngIf="city && state" class="location">{{city}}, {{state}}</span>
       </div>
     </div>

@@ -10,7 +10,7 @@ export class GoogleService {
           this.auth2 = gapi.auth2.init({
             client_id: '891773536607-gv6rrqqgd04bo8gls795np40kqjb4rea.apps.googleusercontent.com',
             cookiepolicy: 'single_host_origin',
-            scope: 'profile email'
+            scope: 'profile email https://www.googleapis.com/auth/calendar'
           });
           resolve(this.auth2);
         },
@@ -22,6 +22,48 @@ export class GoogleService {
           reject('gapi.client timed out!');
         }
       });
+    })
+  }
+
+  public loadGoogleAPIClient() {
+    console.log(this.auth2);
+
+    gapi.load('client', {
+      callback: () => {
+        gapi.client.load('calendar', 'v3', () => {
+          console.log(gapi.client);
+          var event = {
+            'summary': 'testy test',
+            'location': '800 Howard St., San Francisco, CA 94103',
+            'description': 'A chance to hear more about Google\'s developer products.',
+            'start': {
+              'dateTime': '2018-10-28T09:00:00-07:00',
+              'timeZone': 'America/Los_Angeles'
+            },
+            'end': {
+              'dateTime': '2018-10-28T17:00:00-07:00',
+              'timeZone': 'America/Los_Angeles'
+            },
+            // 'recurrence': [
+            //   'RRULE:FREQ=DAILY;COUNT=2'
+            // ],
+            // 'reminders': {
+            //   'useDefault': false,
+            //   'overrides': [
+            //     { 'method': 'email', 'minutes': 24 * 60 },
+            //     { 'method': 'popup', 'minutes': 10 }
+            //   ]
+            // }
+          };
+
+          gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'resource': event
+          }).then(() => {
+            console.log('success');
+          });
+        });
+      }
     })
   }
 

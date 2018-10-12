@@ -26,12 +26,11 @@ export class GoogleService {
   }
 
   public loadGoogleAPIClient() {
-    console.log(this.auth2);
-
+    //wrap in promise for unit testing later
+    //might eventually just handle this serverside instead
     gapi.load('client', {
       callback: () => {
         gapi.client.load('calendar', 'v3', () => {
-          console.log(gapi.client);
           var event = {
             'summary': 'testy test',
             'location': '800 Howard St., San Francisco, CA 94103',
@@ -63,6 +62,8 @@ export class GoogleService {
             console.log('success');
           });
         });
+      },
+      onerror: () => {
       }
     })
   }

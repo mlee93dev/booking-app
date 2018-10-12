@@ -36,6 +36,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
               public googleService: GoogleService) { }
 
   ngOnInit() {
+    this.createGoogleBtnShadow();
     // this.initIoConnection();
     this.locationSubscription = this.socketService.dataReady
       .subscribe(
@@ -151,6 +152,11 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     this.prevSelectedDay = event.target;
   }
 
+  createGoogleBtnShadow() {
+    //attach to checkbox
+    
+  }
+
   googleInit(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.googleService.loadGoogleAPIAuth2()
@@ -193,6 +199,12 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveToGoogleCalendar() {
     this.googleService.loadGoogleAPIClient();
+  }
+
+  toggleGoogleLogin(event) {
+    if (event.target.checked) {
+      
+    }
   }
 
 }

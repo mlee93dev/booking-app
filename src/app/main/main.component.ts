@@ -208,8 +208,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleGoogleLogin(event) {
     let checkbox = document.getElementById('calendarCheckbox');
     if (event.target.checked) {
-      //click shadow button
       checkbox.shadowRoot.getElementById('googleBtn').click();
+    } else {
+      this.googleSignOut();
     }
   }
 

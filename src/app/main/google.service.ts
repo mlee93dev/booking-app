@@ -99,4 +99,8 @@ export class GoogleService {
         .catch((e) => reject(e));
     })
   }
+
+  public isSignedIn() {
+    return this.auth2.isSignedIn.get();
+  }
 }

@@ -153,8 +153,11 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createGoogleBtnShadow() {
-    //attach to checkbox
-    
+    let checkbox = document.getElementById('calendarCheckbox');
+    let shadow = checkbox.attachShadow({mode: 'open'});
+    let googleBtn = document.createElement('div');
+    googleBtn.setAttribute('id', 'googleBtn');
+    shadow.appendChild(googleBtn);
   }
 
   googleInit(): Promise<any> {
@@ -162,7 +165,8 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       this.googleService.loadGoogleAPIAuth2()
         .then((authInstance: any) => {
           this.auth2 = authInstance;
-          this.googleAttachSignIn(document.getElementById('googleBtn'))
+          let checkbox = document.getElementById('calendarCheckbox');
+          this.googleAttachSignIn(checkbox.shadowRoot.getElementById('googleBtn'))
             .then((status) => console.log(status))
             .catch((e) => console.log(e));
           resolve();
@@ -202,8 +206,10 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleGoogleLogin(event) {
+    let checkbox = document.getElementById('calendarCheckbox');
     if (event.target.checked) {
-      
+      //click shadow button
+      checkbox.shadowRoot.getElementById('googleBtn').click();
     }
   }
 

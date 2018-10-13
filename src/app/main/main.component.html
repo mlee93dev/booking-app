@@ -183,10 +183,10 @@
           <span class="days" *ngFor="let date of datesList" (click)=selectDay($event)>{{date}}</span>
         </div>
       </div>
-      <div class="calendar-check"><input type="checkbox" (change)="toggleGoogleLogin($event)"> Save to Google Calendars</div>
-              <!-- <div class="g-signin2" id="googleBtn"></div> -->
-              <!-- <button class="btn btn-primary" (click)="googleSignOut()">sign out</button> -->
-              <!-- <button class="btn btn-primary" (click)="saveToGoogleCalendar()">Insert</button> -->
+      <div class="calendar-check">
+        <input type="checkbox" (change)="toggleGoogleLogin($event)"> Save to Google Calendars
+        <span id="calendarCheckbox"></span>
+      </div>
     </div>
     <div class="form-container-item">
       <button class="btn btn-secondary" (click)="prevPage()">Back</button>

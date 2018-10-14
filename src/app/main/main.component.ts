@@ -201,9 +201,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  saveToGoogleCalendar() {
-    this.googleService.loadGoogleAPIClient();
-  }
+  // saveToGoogleCalendar() {
+  //   this.googleService.loadGoogleAPIClient();
+  // }
 
   toggleGoogleLogin(event) {
     let checkbox = document.getElementById('calendarCheckbox');

@@ -5,6 +5,7 @@ import { Location } from './models/location.model';
 import { SocketIO, Server } from 'mock-socket';
 import { Observable } from "rxjs";
 import { GoogleService } from "./google.service";
+import { ComponentFixture, TestBed, async } from "@angular/core/testing";
 
 let timeService = new TimeService();
 let socketService = new SocketService();
@@ -135,6 +136,20 @@ describe('Socket.IO', () => {
 });
 
 describe('Google API', () => {
+  let fixture: ComponentFixture<MainComponent>;
+  let component: MainComponent;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [],
+      declarations: [MainComponent],
+      providers: []
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(MainComponent);
+      component = fixture.componentInstance;
+    });
+  }));
+
   let success = true;
   let auth2 = 'dummyauth';
   let errormsg = 'failure';
@@ -194,4 +209,27 @@ describe('Google API', () => {
     comp.googleSignOut()
       .catch((e) => expect(e).toBe(errormsg));
   });
+
+  //mock toggle googlelogin
+  // toggleGoogleLogin(event) {
+  //   let checkbox = document.getElementById('calendarCheckbox');
+  //   if (event.target.checked) {
+  //     checkbox.shadowRoot.getElementById('googleBtn').click();
+  //   } else {
+  //     this.googleSignOut();
+  //   }
+  // }
+
+  it('-should toggle google login correctly', async(() => {
+    //mock checkbox div
+    spyOn(component, 'toggleGoogleLogin');
+
+    let googleBtn = fixture.debugElement.nativeElement.getElementById('checkbox').shadowRoot.getElementById('googleBtn');
+    googleBtn.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.toggleGoogleLogin)
+    })
+
+  }));
 });

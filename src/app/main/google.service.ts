@@ -25,48 +25,48 @@ export class GoogleService {
     })
   }
 
-  public loadGoogleAPIClient() {
-    //wrap in promise for unit testing later
-    //might eventually just handle this serverside instead
-    gapi.load('client', {
-      callback: () => {
-        gapi.client.load('calendar', 'v3', () => {
-          var event = {
-            'summary': 'testy test',
-            'location': '800 Howard St., San Francisco, CA 94103',
-            'description': 'A chance to hear more about Google\'s developer products.',
-            'start': {
-              'dateTime': '2018-10-28T09:00:00-07:00',
-              'timeZone': 'America/Los_Angeles'
-            },
-            'end': {
-              'dateTime': '2018-10-28T17:00:00-07:00',
-              'timeZone': 'America/Los_Angeles'
-            },
-            // 'recurrence': [
-            //   'RRULE:FREQ=DAILY;COUNT=2'
-            // ],
-            // 'reminders': {
-            //   'useDefault': false,
-            //   'overrides': [
-            //     { 'method': 'email', 'minutes': 24 * 60 },
-            //     { 'method': 'popup', 'minutes': 10 }
-            //   ]
-            // }
-          };
+  // public loadGoogleAPIClient() {
+  //   //wrap in promise for unit testing later
+  //   //might eventually just handle this serverside instead
+  //   gapi.load('client', {
+  //     callback: () => {
+  //       gapi.client.load('calendar', 'v3', () => {
+  //         var event = {
+  //           'summary': 'testy test',
+  //           'location': '800 Howard St., San Francisco, CA 94103',
+  //           'description': 'A chance to hear more about Google\'s developer products.',
+  //           'start': {
+  //             'dateTime': '2018-10-28T09:00:00-07:00',
+  //             'timeZone': 'America/Los_Angeles'
+  //           },
+  //           'end': {
+  //             'dateTime': '2018-10-28T17:00:00-07:00',
+  //             'timeZone': 'America/Los_Angeles'
+  //           },
+  //           // 'recurrence': [
+  //           //   'RRULE:FREQ=DAILY;COUNT=2'
+  //           // ],
+  //           // 'reminders': {
+  //           //   'useDefault': false,
+  //           //   'overrides': [
+  //           //     { 'method': 'email', 'minutes': 24 * 60 },
+  //           //     { 'method': 'popup', 'minutes': 10 }
+  //           //   ]
+  //           // }
+  //         };
 
-          gapi.client.calendar.events.insert({
-            'calendarId': 'primary',
-            'resource': event
-          }).then(() => {
-            console.log('success');
-          });
-        });
-      },
-      onerror: () => {
-      }
-    })
-  }
+  //         gapi.client.calendar.events.insert({
+  //           'calendarId': 'primary',
+  //           'resource': event
+  //         }).then(() => {
+  //           console.log('success');
+  //         });
+  //       });
+  //     },
+  //     onerror: () => {
+  //     }
+  //   })
+  // }
 
   public attachSignin(element): Promise<any> {
     return new Promise((resolve, reject) => {

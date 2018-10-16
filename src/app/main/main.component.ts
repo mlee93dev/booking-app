@@ -206,12 +206,16 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
 
   toggleGoogleLogin(event) {
-    let checkbox = document.getElementById('checkBoxShadowSource');
     if (event.target.checked) {
-      checkbox.shadowRoot.getElementById('googleBtn').click();
+      this.clickGoogleBtn();
     } else {
       this.googleSignOut();
     }
+  }
+
+  clickGoogleBtn() {
+    let checkbox = document.getElementById('checkBoxShadowSource');
+    checkbox.shadowRoot.getElementById('googleBtn').click();
   }
 
 }

@@ -6,7 +6,10 @@ import { SocketIO, Server } from 'mock-socket';
 import { Observable } from "rxjs";
 import { GoogleService } from "./google.service";
 import { ComponentFixture, TestBed, async } from "@angular/core/testing";
+import { By } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
+import { DebugElement, getDebugNode } from "@angular/core";
+import { resolve } from "path";
 
 // let timeService = new TimeService();
 // let socketService = new SocketService();
@@ -159,6 +162,18 @@ describe('Google API', () => {
     window['gapi'] = {
       load() {
         return null;
+      },
+      auth2: {
+        getAuthInstance() {
+          return {
+            signOut(): Promise<any> {
+              return new Promise(() => resolve());
+            },
+            disconnect(): Promise<any> {
+              return new Promise(() => resolve());
+            }
+          }
+        }
       }
     }
 
@@ -235,17 +250,25 @@ describe('Google API', () => {
   //   }
   // }
 
-  it('-should toggle google login correctly', async(() => {
-    //mock checkbox div
+  it('-should call toggleGoogleLogin upon checkbox change', async(() => {
     spyOn(component, 'toggleGoogleLogin');
 
-    let checkbox = fixture.debugElement.nativeElement.querySelector('#calendarCheckbox');
-    console.log(checkbox);
-    checkbox.checked = true;  
+    const checkboxDebug: DebugElement = fixture.debugElement.query(By.css('#calendarCheckbox'));
+    checkboxDebug.triggerEventHandler('change', {target: {}});
 
     fixture.whenStable().then(() => {
       expect(component.toggleGoogleLogin).toHaveBeenCalled();
     });
+  }));
 
+  it('-should call clickGoogleBtn upon checkbox true', async(() => {
+    spyOn(component, 'clickGoogleBtn');
+
+    const checkboxDebug: DebugElement = fixture.debugElement.query(By.css('#calendarCheckbox'));
+    checkboxDebug.triggerEventHandler('change', {target: {checked: true}});
+
+    fixture.whenStable().then(() => {
+      expect(component.clickGoogleBtn).toHaveBeenCalled();
+    });
   }));
 });

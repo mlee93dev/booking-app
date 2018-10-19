@@ -11,9 +11,9 @@ import { FormsModule } from "@angular/forms";
 import { DebugElement, getDebugNode } from "@angular/core";
 import { resolve } from "path";
 
-// let timeService = new TimeService();
-// let socketService = new SocketService();
-// let googleService = new GoogleService();
+let timeService = new TimeService();
+let socketService = new SocketService();
+let googleService = new GoogleService();
 // const comp = new MainComponent(timeService, socketService, googleService);
 
 // describe('MainComponent', () => {
@@ -142,6 +142,10 @@ import { resolve } from "path";
 describe('Google API', () => {
   let fixture: ComponentFixture<MainComponent>;
   let component: MainComponent;
+  let success = true;
+  let auth2 = 'dummyauth';
+  let errormsg = 'failure';
+  console.log = jasmine.createSpy('Console Log').and.callFake(() => { });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -177,39 +181,31 @@ describe('Google API', () => {
       }
     }
 
+    googleService.loadGoogleAPIAuth2 = function (): Promise<any> {
+      return new Promise((resolve, reject) => {
+        if (success) resolve(auth2);
+        else reject(errormsg);
+      });
+    }
+
+    googleService.attachSignin = function (element): Promise<any> {
+      return new Promise((resolve, reject) => {
+        if (success) resolve('Attached.');
+        else reject(errormsg);
+      })
+    }
+
+    googleService.signOut = function (): Promise<any> {
+      return new Promise((resolve, reject) => {
+        if (success) {
+          auth2 = null;
+          resolve();
+        } else reject(errormsg);
+      })
+    }
+
     fixture.detectChanges();
   });
-
-  // let success = true;
-  // let auth2 = 'dummyauth';
-  // let errormsg = 'failure';
-  // let dummyElement = document.createElement('div');
-  // document.getElementById = jasmine.createSpy('HTML Element').and.returnValue(dummyElement);
-  // console.log = jasmine.createSpy('Console Log').and.callFake(() => {});
-
-  // //Mock google api
-  // googleService.loadGoogleAPIAuth2 = function(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     if (success) resolve(auth2);
-  //     else reject(errormsg);
-  //   });
-  // }
-
-  // googleService.attachSignin = function(element): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     if (success) resolve('Attached.');
-  //     else reject(errormsg);
-  //   })
-  // }
-
-  // googleService.signOut = function(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     if (success) {
-  //       auth2 = null;
-  //       resolve();
-  //     } else reject(errormsg);
-  //   })
-  // }
 
   // it('-googleInit() should make call to gapi and get appropriate response', () => {
   //   comp.googleInit()
@@ -240,16 +236,6 @@ describe('Google API', () => {
   //     .catch((e) => expect(e).toBe(errormsg));
   // });
 
-  //mock toggle googlelogin
-  // toggleGoogleLogin(event) {
-  //   let checkbox = document.getElementById('calendarCheckbox');
-  //   if (event.target.checked) {
-  //     checkbox.shadowRoot.getElementById('googleBtn').click();
-  //   } else {
-  //     this.googleSignOut();
-  //   }
-  // }
-
   it('-should call toggleGoogleLogin upon checkbox change', async(() => {
     spyOn(component, 'toggleGoogleLogin');
 
@@ -265,10 +251,21 @@ describe('Google API', () => {
     spyOn(component, 'clickGoogleBtn');
 
     const checkboxDebug: DebugElement = fixture.debugElement.query(By.css('#calendarCheckbox'));
-    checkboxDebug.triggerEventHandler('change', {target: {checked: true}});
+    checkboxDebug.triggerEventHandler('change', { target: { checked: true } });
 
     fixture.whenStable().then(() => {
       expect(component.clickGoogleBtn).toHaveBeenCalled();
+    });
+  }));
+
+  it('-should call googleSignOut upon checkbox false', async(() => {
+    spyOn(component, 'googleSignOut');
+
+    const checkboxDebug: DebugElement = fixture.debugElement.query(By.css('#calendarCheckbox'));
+    checkboxDebug.triggerEventHandler('change', { target: { checked: false } });
+
+    fixture.whenStable().then(() => {
+      expect(component.googleSignOut).toHaveBeenCalled();
     });
   }));
 });

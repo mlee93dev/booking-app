@@ -10,10 +10,11 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
 import { DebugElement, getDebugNode } from "@angular/core";
 import { resolve } from "path";
+import { reject } from "q";
 
-let timeService = new TimeService();
-let socketService = new SocketService();
-let googleService = new GoogleService();
+// let timeService = new TimeService();
+// let socketService = new SocketService();
+// let googleService = new GoogleService();
 // const comp = new MainComponent(timeService, socketService, googleService);
 
 // describe('MainComponent', () => {
@@ -139,13 +140,9 @@ let googleService = new GoogleService();
 //   });
 // });
 
-describe('Google API', () => {
+describe('GoogleBtn and DOM Emulation', () => {
   let fixture: ComponentFixture<MainComponent>;
   let component: MainComponent;
-  let success = true;
-  let auth2 = 'dummyauth';
-  let errormsg = 'failure';
-  console.log = jasmine.createSpy('Console Log').and.callFake(() => { });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -181,60 +178,8 @@ describe('Google API', () => {
       }
     }
 
-    googleService.loadGoogleAPIAuth2 = function (): Promise<any> {
-      return new Promise((resolve, reject) => {
-        if (success) resolve(auth2);
-        else reject(errormsg);
-      });
-    }
-
-    googleService.attachSignin = function (element): Promise<any> {
-      return new Promise((resolve, reject) => {
-        if (success) resolve('Attached.');
-        else reject(errormsg);
-      })
-    }
-
-    googleService.signOut = function (): Promise<any> {
-      return new Promise((resolve, reject) => {
-        if (success) {
-          auth2 = null;
-          resolve();
-        } else reject(errormsg);
-      })
-    }
-
     fixture.detectChanges();
   });
-
-  // it('-googleInit() should make call to gapi and get appropriate response', () => {
-  //   comp.googleInit()
-  //     .then(() => expect(comp.auth2).toBe(auth2));
-
-  //   success = false;
-  //   comp.googleInit()
-  //     .catch((e) => expect(e).toBe(errormsg));
-  // });
-
-  // it('-googleAttachSignIn() should catch appropriate response', () => {
-  //   success = true;
-  //   comp.googleAttachSignIn(dummyElement)
-  //     .then((status) => expect(status).toBe('Attached.'));
-    
-  //   success = false;
-  //   comp.googleAttachSignIn(dummyElement)
-  //     .catch((error) => expect(error).toBe(errormsg));
-  // });
-
-  // it('-googleSignOut() should clear auth instance', () => {
-  //   success = true;
-  //   comp.googleSignOut()
-  //     .then(() => expect(auth2).toBe(null));
-    
-  //   success = false;
-  //   comp.googleSignOut()
-  //     .catch((e) => expect(e).toBe(errormsg));
-  // });
 
   it('-should call toggleGoogleLogin upon checkbox change', async(() => {
     spyOn(component, 'toggleGoogleLogin');
@@ -268,4 +213,67 @@ describe('Google API', () => {
       expect(component.googleSignOut).toHaveBeenCalled();
     });
   }));
+});
+
+describe('GoogleService Methods', () => {
+  let timeService = new TimeService();
+  let socketService = new SocketService();
+  let googleService = new GoogleService();
+  let comp = new MainComponent(timeService, socketService, googleService);
+
+  let success = true;
+  let auth2 = 'dummyauth';
+  let errormsg = 'failure';
+  let dummyElement = 'div';
+  console.log = jasmine.createSpy('Console Log').and.callFake(() => { });
+
+  googleService.loadGoogleAPIAuth2 = function (): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) resolve(auth2);
+      else reject(errormsg);
+    });
+  }
+
+  googleService.attachSignin = function (element): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) resolve('Attached.');
+      else reject(errormsg);
+    })
+  }
+
+  googleService.signOut = function (): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (success) {
+        auth2 = null;
+        resolve();
+      } else reject(errormsg);
+    })
+  }
+
+  it('-googleInit() should make call to gapi and get appropriate response', () => {
+    comp.googleInit()
+      .then(() => expect(comp.auth2).toBe(auth2));
+
+    success = false;
+    comp.googleInit()
+      .catch((e) => expect(e).toBe(errormsg));
+  });
+
+  // it('-googleAttachSignIn() should catch appropriate response', () => {
+  //   console.log(googleService.auth2);
+  //   success = true;
+  //   component.googleAttachSignIn(dummyElement)
+  //     .then((status) => expect(status).toBe('Attached.'));
+
+  //   success = false;
+  //   component.googleAttachSignIn(dummyElement)
+  //     .catch((error) => expect(error).toBe(errormsg));
+  // });
+
+  // it('-googleSignOut() should call googleService.signOut', async(() => {
+  //   spyOn(googleService, 'signOut');
+  //   component.googleSignOut();
+
+  //   fixture.whenStable().then(() => expect(googleService.signOut).toHaveBeenCalled());
+  // }));
 });

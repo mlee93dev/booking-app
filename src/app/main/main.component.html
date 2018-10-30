@@ -208,7 +208,7 @@
           <span class="label">✓</span>
         </div>
         <span [ngClass]="{'bar':true, 'done':activeFormPage > 3}"></span>
-        <div [ngClass]="{'circle':true, 'done':activeFormPage == 4}">
+        <div [ngClass]="{'circle':true, 'active':activeFormPage == 4}">
           <span class="label">4</span>
         </div>
         <span class="bar"></span>
@@ -218,7 +218,11 @@
       </div>
     </div>
     <div class="form-container-item">
-      hi
+      <button class="btn btn-success" (click)="openCheckOut()">Purchase with Stripe</button>
+    </div>
+    <div class="form-container-item">
+      <button class="btn btn-secondary" (click)="prevPage()">Back</button>
+      <button class="btn btn-primary" (click)="nextPage()">Next</button>
     </div>
   </div>
 </form>

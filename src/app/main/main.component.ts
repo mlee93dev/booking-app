@@ -218,4 +218,20 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     checkbox.shadowRoot.getElementById('googleBtn').click();
   }
 
+  openCheckOut() {
+    var handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_ycrEW8xQaQhrWO69ApbhfqX3',
+      locale: 'auto',
+      token: function (token: any) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+      }
+    });
+
+    handler.open({
+      name: 'Demo Site',
+      description: '2 widgets',
+      amount: 2000
+    });
+  }
 }

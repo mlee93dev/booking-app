@@ -193,4 +193,32 @@
       <button class="btn btn-primary" (click)="nextPage()">Next</button>
     </div>
   </div>
+  <div id="4" class="container hidden">
+    <div class="form-container-item">
+      <div class="form-progress">
+        <div [ngClass]="{'circle':true, 'done':activeFormPage > 1}">
+          <span class="label">✓</span>
+        </div>
+        <span [ngClass]="{'bar':true, 'done':activeFormPage > 1}"></span>
+        <div [ngClass]="{'circle':true, 'done':activeFormPage > 2}">
+          <span class="label">✓</span>
+        </div>
+        <span [ngClass]="{'bar':true, 'done':activeFormPage > 2}"></span>
+        <div [ngClass]="{'circle':true, 'done':activeFormPage > 3}">
+          <span class="label">✓</span>
+        </div>
+        <span [ngClass]="{'bar':true, 'done':activeFormPage > 3}"></span>
+        <div [ngClass]="{'circle':true, 'done':activeFormPage == 4}">
+          <span class="label">4</span>
+        </div>
+        <span class="bar"></span>
+        <div class="circle">
+          <span class="label">5</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-container-item">
+      hi
+    </div>
+  </div>
 </form>
